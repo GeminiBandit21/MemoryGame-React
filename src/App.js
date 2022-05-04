@@ -1,12 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
 
 function App() {
   return (
     <div className="App">
-      App
+      <h1>Magic Match</h1>
+      <button>New Game</button>
     </div>
   );
 }
 
-export default App;
+export default App
