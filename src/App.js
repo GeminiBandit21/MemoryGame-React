@@ -60,7 +60,7 @@ useEffect(()=> {
       }
     }  else{
 
-      resetTurn()
+      setTimeout(() => resetTurn(), 1000)
     }
   }
 
