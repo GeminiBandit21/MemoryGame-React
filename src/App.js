@@ -4,12 +4,12 @@ import './App.css'
 
 //Array holding all the images, by storing the source property.
 const cardImages=[
-  {"src": "/img/helmet-1.png"},
-  {"src": "/img/potion-1.png"},
-  {"src": "/img/ring-1.png"},
-  {"src": "/img/scroll-1.png"},
-  {"src": "/img/shield-1.png"},
-  {"src": "/img/sword-1.png"}
+  {"src": "/img/helmet-1.png", matched:false},
+  {"src": "/img/potion-1.png", matched:false},
+  {"src": "/img/ring-1.png", matched:false},
+  {"src": "/img/scroll-1.png", matched:false},
+  {"src": "/img/shield-1.png", matched:false},
+  {"src": "/img/sword-1.png", matched:false}
 ]
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
 //if choice one is null/false setChoiceOne, if its true will setChoiceTwo using ternary operator 
 const handleChoice = (card) =>{
   choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
-  console.log(card)
+  //console.log(card)
 }
 
 
@@ -43,15 +43,30 @@ const handleChoice = (card) =>{
 useEffect(()=> {
   if (choiceOne && choiceTwo){
     if (choiceOne.src === choiceTwo.src){
-      console.log("Match!")
-      resetTurn()
+      if(choiceOne.id !== choiceTwo.id){
+        setCards(preCards=>{
+          return preCards.map(card =>{
+            if (card.src === choiceOne.src){
+              return{...card, matched: true}
+            }
+            else{
+              return card
+            }
+          })
+        })
+        resetTurn()}
+      else{
+        resetTurn()
+      }
     }  else{
-      console.log("No Match!")
+
       resetTurn()
     }
   }
 
 },[choiceOne, choiceTwo])
+
+console.log(cards)
 
 //reset choices & increase turns
 const resetTurn = () =>{
