@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SingleCard from "./components/SingleCard"
 import './App.css'
 
@@ -29,9 +29,36 @@ function App() {
     setTurns(0)
   }
 
-  console.log(cards, turns)
+//console.log(cards, turns)
+
+//handles users choice
+//if choice one is null/false setChoiceOne, if its true will setChoiceTwo using ternary operator 
+const handleChoice = (card) =>{
+  choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
+  console.log(card)
+}
 
 
+//Compare 2 selected cards
+useEffect(()=> {
+  if (choiceOne && choiceTwo){
+    if (choiceOne.src === choiceTwo.src){
+      console.log("Match!")
+      resetTurn()
+    }  else{
+      console.log("No Match!")
+      resetTurn()
+    }
+  }
+
+},[choiceOne, choiceTwo])
+
+//reset choices & increase turns
+const resetTurn = () =>{
+  setChoiceOne(null)
+  setChoiceTwo(null)
+  setTurns(prevTurns => prevTurns + 1)
+}
 
 //card={card} is creating a prop to be taken in by the SingleCard component
   return (
@@ -41,7 +68,11 @@ function App() {
 
       <div className="card-grid">
         {cards.map(card => (
-            <SingleCard key={card.id} card={card}/>
+            <SingleCard 
+              key={card.id} 
+              card={card}
+              handleChoice={handleChoice}
+            />
         ))}
     </div>
     </div>
